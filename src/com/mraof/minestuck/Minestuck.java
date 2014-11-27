@@ -62,6 +62,7 @@ import com.mraof.minestuck.entity.underling.EntityGiclops;
 import com.mraof.minestuck.entity.underling.EntityImp;
 import com.mraof.minestuck.entity.underling.EntityOgre;
 import com.mraof.minestuck.event.MinestuckFluidHandler;
+import com.mraof.minestuck.event.CommonEventHandler;
 import com.mraof.minestuck.inventory.captchalouge.CaptchaDeckHandler;
 import com.mraof.minestuck.item.ItemCaptchaCard;
 import com.mraof.minestuck.item.ItemComponent;
@@ -110,6 +111,7 @@ import com.mraof.minestuck.util.SburbServer;
 import com.mraof.minestuck.util.UpdateChecker;
 import com.mraof.minestuck.world.WorldProviderLands;
 import com.mraof.minestuck.world.WorldProviderSkaia;
+import com.mraof.minestuck.world.finite.WorldProviderLoopExperiment;
 import com.mraof.minestuck.world.gen.OreHandler;
 import com.mraof.minestuck.world.gen.structure.StructureCastlePieces;
 import com.mraof.minestuck.world.gen.structure.StructureCastleStart;
@@ -491,6 +493,10 @@ public class Minestuck
 		DimensionManager.registerDimension(skaiaDimensionId, skaiaProviderTypeId);
 		DimensionManager.registerProviderType(landProviderTypeId, WorldProviderLands.class, true);
 		
+		//TEMP
+		DimensionManager.registerProviderType(landProviderTypeId + 1, WorldProviderLoopExperiment.class, true);
+		DimensionManager.registerDimension(skaiaDimensionId + 1, landProviderTypeId + 1);
+		
 		//register ore generation
 		if (generateCruxiteOre) {
 			OreHandler oreHandler = new OreHandler();
@@ -505,6 +511,7 @@ public class Minestuck
 		MinecraftForge.EVENT_BUS.register(new MinestuckFluidHandler());
 		MinecraftForge.EVENT_BUS.register(ServerEditHandler.instance);
 		MinecraftForge.EVENT_BUS.register(MinestuckAchievementHandler.instance);
+		MinecraftForge.EVENT_BUS.register(new CommonEventHandler());
 		
 		FMLCommonHandler.instance().bus().register(MinestuckPlayerTracker.instance);
 		FMLCommonHandler.instance().bus().register(ServerEditHandler.instance);

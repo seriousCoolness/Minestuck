@@ -28,7 +28,7 @@ public class BlockGatePortal extends BlockContainer
 		
 		setBlockName("gatePortal");
 		this.setCreativeTab(Minestuck.tabMinestuck);
-		destinationDimension = 2;
+		destinationDimension = 3;
 	}
 	@Override
 	public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)

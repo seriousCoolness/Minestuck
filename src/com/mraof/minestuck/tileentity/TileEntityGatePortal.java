@@ -14,6 +14,12 @@ public class TileEntityGatePortal extends TileEntity implements ITeleporter
 {
 	public int destinationDimension;
 	public int destinationX, destinationY, destinationZ;
+	
+	public TileEntityGatePortal()
+	{
+		destinationY = 100;
+	}
+	
 	@Override
 	public void readFromNBT(NBTTagCompound par1nbtTagCompound) 
 	{

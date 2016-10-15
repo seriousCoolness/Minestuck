@@ -78,7 +78,7 @@ public abstract class TerrainLandAspect implements ILandAspect<TerrainLandAspect
 		return new DefaultTerrainGen(chunkProvider, rand);
 	}
 	
-	public void modifyStructureList(List<LandStructureHandler.StructureEntry> list)
+	public void modifyStructureList(LandStructureHandler list)
 	{}
 	
 	@Override

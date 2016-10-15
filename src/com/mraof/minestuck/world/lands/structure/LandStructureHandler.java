@@ -19,6 +19,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.structure.MapGenStructure;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
@@ -27,16 +28,22 @@ import net.minecraft.world.gen.structure.StructureStart;
 public class LandStructureHandler extends MapGenStructure
 {
 	
-	public final static List<StructureEntry> genericStructures = new ArrayList<StructureEntry>();
-	public final List<StructureEntry> structures = new ArrayList<StructureEntry>();
-	private int totalWeight;
+	public final static List<StructureEntry> genericBuildings = new ArrayList<StructureEntry>();
+	public final static List<StructureEntry> genericDungeons = new ArrayList<StructureEntry>();
+	public final List<StructureEntry> buildings = new ArrayList<StructureEntry>();
+	public final List<StructureEntry> dungeons = new ArrayList<StructureEntry>();
+	private int dungeonWeight;
+	private int buildingWeight;
+	private double buildingProbability;
+	
+	private final DungeonGen dungeonGen;
 	
 	private final ChunkProviderLands chunkProvider;
 	
 	public static void registerStructures()
 	{
-		genericStructures.add(new StructureEntry(SmallRuinStart.class, 3, BiomeMinestuck.mediumNormal));
-		genericStructures.add(new StructureEntry(ImpDungeonStart.class, 1, BiomeMinestuck.mediumNormal, BiomeMinestuck.mediumRough));
+		genericBuildings.add(new StructureEntry(SmallRuinStart.class, 3, BiomeMinestuck.mediumNormal));
+		genericDungeons.add(new StructureEntry(ImpDungeonStart.class, 1, BiomeMinestuck.mediumNormal, BiomeMinestuck.mediumRough));
 		MapGenStructureIO.registerStructure(SmallRuinStart.class, "MinestuckSmallRuin");
 		MapGenStructureIO.registerStructureComponent(SmallRuinStart.SmallRuin.class, "MinestuckSmallRuinCompo");
 		MapGenStructureIO.registerStructure(ImpDungeonStart.class, "MinestuckImpDungeon");
@@ -46,56 +53,51 @@ public class LandStructureHandler extends MapGenStructure
 	
 	public boolean isInsideDungeon(BlockPos pos)
 	{
-		this.initializeStructureData(this.worldObj);
-		StructureStart structure = this.getStructureAt(pos);
-		return structure != null && (structure instanceof ImpDungeonStart);
+		return dungeonGen.isInsideDungeon(pos);
 	}
 	
 	public LandStructureHandler(ChunkProviderLands chunkProvider)
 	{
 		this.worldObj = chunkProvider.landWorld;
 		
-		structures.addAll(genericStructures);
+		buildings.addAll(genericBuildings);
+		dungeons.addAll(genericDungeons);
 		this.chunkProvider = chunkProvider;
 		
-		chunkProvider.aspect1.modifyStructureList(structures);
+		chunkProvider.aspect1.modifyStructureList(this);
+		
+		dungeonGen = new DungeonGen(chunkProvider, this);
 	}
 	
-	private static final int MAX_STRUCTURE_DISTANCE = 15;
-	private static final int MIN_STRUCTURE_DISTANCE = 4;
 	private static final int MAX_NODE_DISTANCE = 9;
-	private static final int MIN_NODE_DISTANCE = 4;
+	private static final int MIN_NODE_DISTANCE = 3;
 	
 	@Override
-	protected boolean canSpawnStructureAtCoords(int chunkX, int chunkZ)	//This works very much like the scattered features in the overworld
+	protected boolean canSpawnStructureAtCoords(int chunkX, int chunkZ)
 	{
-		int x = chunkX;
-		int z = chunkZ;
 		
-		if (x < 0)
-			x -= this.MAX_STRUCTURE_DISTANCE - 1;
-		if (z < 0)
-			z -= this.MAX_STRUCTURE_DISTANCE - 1;
+		Random random = this.worldObj.setRandomSeed(chunkX, chunkZ, 65738339^worldObj.provider.getDimension());
 		
-		x /= this.MAX_STRUCTURE_DISTANCE;
-		z /= this.MAX_STRUCTURE_DISTANCE;
-		Random random = this.worldObj.setRandomSeed(x, z, 59273643^worldObj.provider.getDimension());
-		x *= this.MAX_STRUCTURE_DISTANCE;
-		z *= this.MAX_STRUCTURE_DISTANCE;
-		x += random.nextInt(this.MAX_STRUCTURE_DISTANCE - this.MIN_STRUCTURE_DISTANCE);
-		z += random.nextInt(this.MAX_STRUCTURE_DISTANCE - this.MIN_STRUCTURE_DISTANCE);
-		
-		if (chunkX == x && chunkZ == z)
+		if(random.nextDouble() < 0.2 && !buildingAt(chunkX - 1, chunkZ + 1) && !buildingAt(chunkX, chunkZ + 1)
+				 && !buildingAt(chunkX + 1, chunkZ + 1) && !buildingAt(chunkX + 1, chunkZ))
 		{
-			Random entryRand = worldObj.setRandomSeed(chunkX , chunkZ, 34527185^worldObj.provider.getDimension());
-			Biome biome = this.worldObj.getBiomeProvider().getBiomeGenerator(new BlockPos(new BlockPos(chunkX*16 + 8, 0, chunkZ*16 + 8)));
-			StructureEntry entry = getRandomEntry(entryRand);
 			
-			return !chunkProvider.isBBInSpawn(new StructureBoundingBox(chunkX*16 - 16, chunkZ*16 - 16, chunkX*16 + 32, chunkZ*16 + 32))	//This chunk and the chunks around it.
-					&& (entry.biomes.isEmpty() || entry.biomes.contains(biome));
 		}
 		
+		Biome biome = this.worldObj.getBiomeProvider().getBiomeGenerator(new BlockPos(new BlockPos(chunkX*16 + 8, 0, chunkZ*16 + 8)));
+		StructureEntry entry = getRandomDungeon(entryRand);
+		
+		
+		return !chunkProvider.isBBInSpawn(new StructureBoundingBox(chunkX*16 - 16, chunkZ*16 - 16, chunkX*16 + 32, chunkZ*16 + 32))	//This chunk and the chunks around it.
+				&& (entry.biomes.isEmpty() || entry.biomes.contains(biome));
+		
 		return false;
+	}
+	
+	private boolean buildingAt(int chunkX, int chunkZ)
+	{
+		Random random = this.worldObj.setRandomSeed(chunkX, chunkZ, 65738339^worldObj.provider.getDimension());
+		return random.nextDouble() < 0.2;
 	}
 	
 	@Override
@@ -109,30 +111,56 @@ public class LandStructureHandler extends MapGenStructure
 	{
 		Random rand = worldObj.setRandomSeed(chunkX , chunkZ, 34527185^worldObj.provider.getDimension());
 		
-		return getRandomEntry(rand).createInstance(chunkProvider, worldObj, rand, chunkX, chunkZ);
+		return getRandomBuilding(rand).createInstance(chunkProvider, worldObj, rand, chunkX, chunkZ);
 	}
 	
-	private StructureEntry getRandomEntry(Random random)
+	@Override
+	public void generate(World worldIn, int x, int z, ChunkPrimer primer)
 	{
-		if(totalWeight == 0)
-			totalWeight = WeightedRandom.getTotalWeight(structures);
+		dungeonGen.generate(worldIn, x, z, primer);
+		super.generate(worldIn, x, z, primer);
+	}
+	
+	@Override
+	public synchronized boolean generateStructure(World worldIn, Random randomIn, ChunkPos chunkCoord)
+	{
+		dungeonGen.generateStructure(worldIn, randomIn, chunkCoord);
+		return super.generateStructure(worldIn, randomIn, chunkCoord);
+	}
+	
+	private StructureEntry getRandomBuilding(Random random)
+	{
+		return WeightedRandom.getRandomItem(rand, buildings, buildingWeight);
+	}
+	
+	protected StructureEntry getRandomDungeon(Random random)
+	{
+		if(dungeonWeight == 0)
+			dungeonWeight = WeightedRandom.getTotalWeight(dungeons);
 		
-		return WeightedRandom.getRandomItem(rand, structures, totalWeight);
+		return WeightedRandom.getRandomItem(rand, dungeons, dungeonWeight);
 	}
 	
 	public static class StructureEntry extends WeightedRandom.Item
 	{
 		public final Class<? extends StructureStart> structureStart;
 		public final Set<Biome> biomes;
+		public final int amount;
 		
 		public StructureEntry(Class<? extends StructureStart> structure, int weight, Biome... biomes)
+		{
+			this(structure, weight, 0, biomes);
+		}
+		
+		public StructureEntry(Class<? extends StructureStart> structure, int weight, int amount, Biome... biomes)
 		{
 			super(weight);
 			this.structureStart = structure;
 			this.biomes = new HashSet<Biome>(Arrays.asList(biomes));
+			this.amount = amount;
 		}
 		
-		private StructureStart createInstance(ChunkProviderLands chunkProvider, World world, Random rand, int chunkX, int chunkZ)
+		public StructureStart createInstance(ChunkProviderLands chunkProvider, World world, Random rand, int chunkX, int chunkZ)
 		{
 			try
 			{

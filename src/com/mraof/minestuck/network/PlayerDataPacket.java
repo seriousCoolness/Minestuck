@@ -48,16 +48,19 @@ public class PlayerDataPacket extends MinestuckPacket
 			data.writeFloat((Float) dat[2]);
 			data.writeBoolean((Boolean) dat[3]);
 		} else if(type == BOONDOLLAR)
-		{
-			data.writeInt((Integer) dat[1]);
-		} else if(type == TITLE_SELECT)
-		{
-			if(dat.length > 1)
-			{
-				data.writeInt(EnumClass.getIntFromClass((EnumClass) dat[1]));
-				data.writeInt(EnumAspect.getIntFromAspect((EnumAspect) dat[2]));
-			}
-		}
+        {
+            data.writeInt((Integer) dat[1]);
+        } else if(type == TITLE_SELECT)
+        {
+            if(dat.length > 1)
+            {
+                data.writeInt(EnumClass.getIntFromClass((EnumClass) dat[1]));
+                data.writeInt(EnumAspect.getIntFromAspect((EnumAspect) dat[2]));
+            }
+        } else if(type == CONSORT_REPUTATION)
+        {
+            data.writeInt((Integer) dat[1]);
+        }
 		
 		return this;
 	}

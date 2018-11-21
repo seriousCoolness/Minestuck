@@ -21,7 +21,7 @@ import com.mraof.minestuck.util.Title;
 
 public class PlayerDataPacket extends MinestuckPacket 
 {
-	public static final byte COLOR = 0, TITLE = 1, ECHELADDER = 2, BOONDOLLAR = 3, TITLE_SELECT = 4;
+	public static final byte COLOR = 0, TITLE = 1, ECHELADDER = 2, BOONDOLLAR = 3, TITLE_SELECT = 4, CONSORT_REPUTATION = 5;
 	
 	public int type;
 	public int i1;
@@ -91,6 +91,8 @@ public class PlayerDataPacket extends MinestuckPacket
 				i1 = data.readInt();
 				i2 = data.readInt();
 			} else i1 = -1;
+		} else if(type == CONSORT_REPUTATION) {
+			i1 = data.readInt();
 		}
 		
 		return this;
@@ -138,6 +140,8 @@ public class PlayerDataPacket extends MinestuckPacket
 			{
 				SburbHandler.titleSelected(player, title);
 			}
+		} else if(type == CONSORT_REPUTATION) {
+			MinestuckPlayerData.consortRep = i1;
 		}
 	}
 	

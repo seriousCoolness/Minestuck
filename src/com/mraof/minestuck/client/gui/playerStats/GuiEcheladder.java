@@ -166,7 +166,7 @@ public class GuiEcheladder extends GuiPlayerStats
 		
 		mc.fontRenderer.drawString("=", xOffset + 25, yOffset + 12, 0x404040);	//Should this be black, or the same blue as the numbers?
 		mc.fontRenderer.drawString(String.valueOf(MinestuckPlayerData.boondollars), xOffset + 27 + mc.fontRenderer.getCharWidth('='), yOffset + 12, 0x0094FF);
-		
+		mc.fontRenderer.drawString(String.valueOf(MinestuckPlayerData.consortRep), xOffset + 47 + mc.fontRenderer.getCharWidth('='), yOffset + 12, 0x0094FF);
 		mc.fontRenderer.drawString(I18n.format("gui.echeladder.cache.name"), xOffset + 24, yOffset + 138, 0x404040);
 		mc.fontRenderer.drawString("Unlimited", xOffset + 26, yOffset + 147, 0x0094FF);
 		

@@ -3,13 +3,18 @@ package com.mraof.minestuck.entity.consort;
 import com.mraof.minestuck.advancements.MinestuckCriteriaTriggers;
 import com.mraof.minestuck.entity.EntityMinestuck;
 import com.mraof.minestuck.inventory.InventoryConsortMerchant;
+import com.mraof.minestuck.util.Debug;
+import com.mraof.minestuck.util.MinestuckPlayerData;
 import com.mraof.minestuck.world.MinestuckDimensionHandler;
+
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -265,4 +270,14 @@ public abstract class EntityConsort extends EntityMinestuck
 			messageData.setTag(player.getCachedUniqueIdString(), new NBTTagCompound());
 		return messageData.getCompoundTag(player.getCachedUniqueIdString());
 	}
+	
+	@Override
+    public void onDeath(DamageSource cause) {
+        super.onDeath(cause);
+        EntityLivingBase entityLivingBase = this.getAttackingEntity();
+        Debug.info(entityLivingBase);
+        if(entityLivingBase != null && !(entityLivingBase.world.isRemote) && entityLivingBase instanceof EntityPlayer) {
+                MinestuckPlayerData.addReputation((EntityPlayer) entityLivingBase, -50);
+        }
+    }
 }

@@ -142,6 +142,9 @@ public class ConsortDialogue
 				new MessageType[]{new PurchaseMessage(MinestuckLoot.CONSORT_JUNK_REWARD, 100, new ChainMessage(1, new SingleMessage("furCoat.grattitude"), new SingleMessage("thankYou"))),
 						new SingleMessage("furCoat.death")})).landTerrain(fromNameTerrain("frost"));
 		addMessage("tentProtection").landTerrain(fromNameTerrain("frost")).consortReq((EntityConsort::hasHome));
+		addMessage("iguanaIcicle", "denizen").landTerrain(fromNameTerrain("frost"));
+		addMessage("theFrost").landTerrain(fromNameTerrain("frost"));
+		addMessage("foodScarcity", "denizen", "landName").landTerrain(fromNameTerrain("frost"));
 		addMessage("allOres").landTerrain(fromNameTerrain("rock"));
 		addMessage("rockfu", "landName").landTerrain(fromNameTerrain("rock"));
 		addMessage("allTrees").landTerrain(fromNameTerrain("forest"));

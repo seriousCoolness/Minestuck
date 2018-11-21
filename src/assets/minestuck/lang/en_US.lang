@@ -89,6 +89,9 @@ computer.selectColor=Select a Color
 computer.serverSessionFull=Server player's session is full
 computer.clientSessionFull=Client player's session is full
 
+consort.repDown=Your reputation with consorts has gone down %s points.
+consort.repUp=Your reputation with consorts has gone up %s points.
+
 consort.cantAfford=You don't have enough boondollars for that!
 consort.missingItem=You need a %s for that!
 consort.thanks=Thanks!

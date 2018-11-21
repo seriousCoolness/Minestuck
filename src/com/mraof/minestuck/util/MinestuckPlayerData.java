@@ -14,6 +14,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -162,6 +164,13 @@ public class MinestuckPlayerData
 		EntityPlayer player = id.getPlayer();
 		if(player != null)
 			MinestuckChannelHandler.sendToPlayer(MinestuckPacket.makePacket(MinestuckPacket.Type.PLAYER_DATA, PlayerDataPacket.CONSORT_REPUTATION, data.consortRep), player);
+		if(rep < 0) {
+			ITextComponent message = new TextComponentTranslation("consort.repDown", new TextComponentTranslation(String.valueOf(Math.abs(rep))));
+			player.sendMessage(message);
+		} else { 
+			ITextComponent message = new TextComponentTranslation("consort.repUp", new TextComponentTranslation(String.valueOf(Math.abs(rep))));
+			player.sendMessage(message);
+		}
 		return true;
 	}
 	

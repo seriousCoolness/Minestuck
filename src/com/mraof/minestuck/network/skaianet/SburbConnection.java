@@ -46,7 +46,6 @@ public class SburbConnection
 	boolean isMain;
 	boolean enteredGame;
 	boolean canSplit;
-	int clientHomeLand;
 	int artifactType;
 	/**
 	 * If the client will have frog breeding as quest, the array will be extended and the new positions will hold the gear.
@@ -61,6 +60,8 @@ public class SburbConnection
 	//Non-saved variables used by the edit handler
 	public double posX, posZ;
 	public boolean useCoordinates;
+	
+	public LandData clientHomeLand;
 	
 	SburbConnection()
 	{
@@ -86,7 +87,13 @@ public class SburbConnection
 	public ComputerData getServerData() {return server;}
 	public boolean enteredGame(){return enteredGame;}
 	public boolean isMain(){return isMain;}
-	public int getClientDimension() {return clientHomeLand;}
+	public int getClientDimension() {return clientHomeLand == null ? 0 : clientHomeLand.landDimId;}
+	void setClientDimension(int dimId)
+	{
+		if(clientHomeLand == null)
+			clientHomeLand = new LandData();
+		clientHomeLand.landDimId = dimId;
+	}
 	public boolean[] givenItems(){return givenItemList;}
 	@SideOnly(Side.CLIENT)
 	public String getClientDisplayName() {return clientName;}
@@ -132,7 +139,7 @@ public class SburbConnection
 			nbt.setTag("givenItems", list);
 			if(enteredGame)
 			{
-				nbt.setInteger("clientLand", clientHomeLand);
+				clientHomeLand.saveToNBT(nbt);
 			}
 		}
 		if(isActive)
@@ -183,10 +190,11 @@ public class SburbConnection
 		}
 		if(enteredGame)
 		{
-			clientHomeLand = nbt.getInteger("clientLand");
-			if(MinestuckDimensionHandler.isLandDimension(clientHomeLand))
+			clientHomeLand = new LandData();
+			clientHomeLand.loadFromNBT(nbt);
+			if(MinestuckDimensionHandler.isLandDimension(clientHomeLand.landDimId))
 			{
-				BlockPos spawn = MinestuckDimensionHandler.getSpawn(clientHomeLand);
+				BlockPos spawn = MinestuckDimensionHandler.getSpawn(clientHomeLand.landDimId);
 				if(spawn != null)
 				{
 					centerX = spawn.getX();

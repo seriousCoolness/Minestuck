@@ -91,6 +91,10 @@ public class MinestuckPlayerTracker
 		MinestuckChannelHandler.sendToPlayer(MinestuckPacket.makePacket(Type.PLAYER_DATA, PlayerDataPacket.BOONDOLLAR, MinestuckPlayerData.getData(identifier).boondollars), player);
 		ServerEditHandler.onPlayerLoggedIn(player);
 		
+		if(MinestuckDimensionHandler.isLandDimension(event.player.dimension))
+			MinestuckChannelHandler.sendToPlayer(MinestuckPacket.makePacket(MinestuckPacket.Type.PLAYER_DATA, PlayerDataPacket.CONSORT_REPUTATION, MinestuckDimensionHandler.getReputation(event.player)), event.player);
+		else MinestuckChannelHandler.sendToPlayer(MinestuckPacket.makePacket(MinestuckPacket.Type.PLAYER_DATA, PlayerDataPacket.CONSORT_REPUTATION, 0), event.player);
+		
 		if(firstTime && !player.isSpectator())
 			MinestuckChannelHandler.sendToPlayer(MinestuckPacket.makePacket(Type.PLAYER_DATA, PlayerDataPacket.COLOR), player);
 		else
@@ -142,6 +146,14 @@ public class MinestuckPlayerTracker
 		Modus modus = MinestuckPlayerData.getData(event.player).modus;
 		if(modus != null)
 			modus.player = event.player;
+	}
+	
+	@SubscribeEvent
+	public void onPlayerChangeDimension(PlayerEvent.PlayerChangedDimensionEvent event)
+	{
+		if(MinestuckDimensionHandler.isLandDimension(event.player.dimension))
+			MinestuckChannelHandler.sendToPlayer(MinestuckPacket.makePacket(MinestuckPacket.Type.PLAYER_DATA, PlayerDataPacket.CONSORT_REPUTATION, MinestuckDimensionHandler.getReputation(event.player)), event.player);
+		else MinestuckChannelHandler.sendToPlayer(MinestuckPacket.makePacket(MinestuckPacket.Type.PLAYER_DATA, PlayerDataPacket.CONSORT_REPUTATION, 0), event.player);
 	}
 	
 	public static Set<String> dataCheckerPermission = new HashSet<String>();

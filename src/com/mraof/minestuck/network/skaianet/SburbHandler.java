@@ -548,7 +548,7 @@ public class SburbHandler
 	public static SburbConnection getConnectionForDimension(int dim)
 	{
 		for(SburbConnection c : SkaianetHandler.connections)
-			if(c.enteredGame && c.clientHomeLand == dim)
+			if(c.enteredGame && c.getClientDimension() == dim)
 				return c;
 		return null;
 	}
@@ -578,7 +578,7 @@ public class SburbHandler
 	
 	private static void genLandAspects(SburbConnection connection)
 	{
-		LandAspectRegistry aspectGen = new LandAspectRegistry((Minestuck.worldSeed^connection.clientHomeLand)^(connection.clientHomeLand << 8));
+		LandAspectRegistry aspectGen = new LandAspectRegistry((Minestuck.worldSeed^connection.getClientDimension())^(connection.getClientDimension() << 8));
 		Session session = getPlayerSession(connection.getClientIdentifier());
 		Title title = MinestuckPlayerData.getTitle(connection.getClientIdentifier());
 		TitleLandAspect titleAspect = null;
@@ -599,7 +599,7 @@ public class SburbHandler
 		for(SburbConnection c : session.connections)
 			if(c.enteredGame && c != connection)
 			{
-				LandAspectRegistry.AspectCombination aspects = MinestuckDimensionHandler.getAspects(c.clientHomeLand);
+				LandAspectRegistry.AspectCombination aspects = MinestuckDimensionHandler.getAspects(c.getClientDimension());
 				if(aspects.aspectTitle == LandAspectRegistry.frogAspect)
 					frogs = true;
 				usedTitleAspects.add(aspects.aspectTitle);
@@ -621,7 +621,7 @@ public class SburbHandler
 			titleAspect = aspectGen.getTitleAspect(terrainAspect, title.getHeroAspect(), usedTitleAspects);
 		if(terrainAspect == null)
 			terrainAspect = aspectGen.getTerrainAspect(titleAspect, usedTerrainAspects);
-		MinestuckDimensionHandler.registerLandDimension(connection.clientHomeLand, new AspectCombination(terrainAspect, titleAspect));
+		MinestuckDimensionHandler.registerLandDimension(connection.getClientDimension(), new AspectCombination(terrainAspect, titleAspect));
 	}
 	
 	public static GristType getUnderlingType(EntityUnderling entity)

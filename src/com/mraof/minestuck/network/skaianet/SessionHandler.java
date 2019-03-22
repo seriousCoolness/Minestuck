@@ -499,11 +499,11 @@ public class SessionHandler
 				connectionTag.setBoolean("isActive", c.isActive);
 				if(c.isMain)
 				{
-					connectionTag.setInteger("clientDim", c.enteredGame ? c.clientHomeLand : 0);
-					if(c.enteredGame && DimensionManager.isDimensionRegistered(c.clientHomeLand))
+					connectionTag.setInteger("clientDim", c.enteredGame ? c.getClientDimension() : 0);
+					if(c.enteredGame && DimensionManager.isDimensionRegistered(c.getClientDimension()))
 					{
-						LandAspectRegistry.AspectCombination aspects = MinestuckDimensionHandler.getAspects(c.clientHomeLand);
-						IChunkGenerator chunkGen = server.getWorld(c.clientHomeLand).provider.createChunkGenerator();
+						LandAspectRegistry.AspectCombination aspects = MinestuckDimensionHandler.getAspects(c.getClientDimension());
+						IChunkGenerator chunkGen = server.getWorld(c.getClientDimension()).provider.createChunkGenerator();
 						if(chunkGen instanceof ChunkProviderLands)
 						{
 							ChunkProviderLands landChunkGen = (ChunkProviderLands) chunkGen;

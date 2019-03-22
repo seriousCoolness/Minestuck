@@ -555,16 +555,16 @@ public class SkaianetHandler {
 						sc.markBlockForUpdate();
 					}
 				}
-				if(cc != null && c.enteredGame && !MinestuckDimensionHandler.isLandDimension(c.clientHomeLand))
-					c.clientHomeLand = c.client.dimension;
+				if(cc != null && c.enteredGame && !MinestuckDimensionHandler.isLandDimension(c.getClientDimension()))
+					c.setClientDimension(c.client.dimension);
 			}
-			if(c.enteredGame && !MinestuckDimensionHandler.isLandDimension(c.clientHomeLand))
+			if(c.enteredGame && !MinestuckDimensionHandler.isLandDimension(c.getClientDimension()))
 			{
 				EntityPlayerMP player = c.getClientIdentifier().getPlayer();
 				if(player != null)
 				{
-					c.clientHomeLand = player.dimension;
-					if(!MinestuckDimensionHandler.isLandDimension(c.clientHomeLand))
+					c.setClientDimension(player.dimension);
+					if(!MinestuckDimensionHandler.isLandDimension(c.getClientDimension()))
 					{
 						iter2.remove();
 						SessionHandler.onConnectionClosed(c, false);
@@ -680,14 +680,14 @@ public class SkaianetHandler {
 			else giveItems(username);
 		}
 		else if(c.enteredGame)
-			return c.clientHomeLand;
+			return c.getClientDimension();
 		
 		int x = (int) player.posX;
 		if(player.posX < 0) x--;
 		int z = (int) player.posZ;
 		if (player.posZ < 0) z--;
 		MinestuckDimensionHandler.setSpawn(dimensionId, new BlockPos(x, 128 - MinestuckConfig.artifactRange, z));
-		c.clientHomeLand = dimensionId;
+		c.setClientDimension(dimensionId);
 		SburbHandler.onLandCreated(c);
 		
 		if(teleport != null && Teleport.teleportEntity(player, dimensionId, teleport))

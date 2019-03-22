@@ -3,11 +3,20 @@ package com.mraof.minestuck.world;
 import com.mraof.minestuck.Minestuck;
 import com.mraof.minestuck.MinestuckConfig;
 import com.mraof.minestuck.network.LandRegisterPacket;
+import com.mraof.minestuck.network.MinestuckChannelHandler;
+import com.mraof.minestuck.network.MinestuckPacket;
+import com.mraof.minestuck.network.PlayerDataPacket;
+import com.mraof.minestuck.network.skaianet.SburbConnection;
+import com.mraof.minestuck.network.skaianet.SburbHandler;
 import com.mraof.minestuck.util.Debug;
+import com.mraof.minestuck.util.IdentifierHandler;
 import com.mraof.minestuck.world.lands.LandAspectRegistry;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DimensionType;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.FMLLog;
@@ -187,5 +196,52 @@ public class MinestuckDimensionHandler
 	public static void setSpawn(int dim, BlockPos spawnpoint)
 	{
 		spawnpoints.put(dim, spawnpoint);
+	}
+	
+	public static int getReputation(EntityPlayer player)
+	{
+		return getReputation(IdentifierHandler.encode(player), player.dimension);
+	}
+	
+	public static int getReputation(IdentifierHandler.PlayerIdentifier id, int dimension)
+	{
+		SburbConnection c = SburbHandler.getConnectionForDimension(dimension);
+		if(c == null || c.clientHomeLand == null)
+		{
+			Debug.warnf("Could not find connection for dimension %d while fetching consort reputation value.", dimension);
+			return 0;
+		}
+		return c.clientHomeLand.getReputation(id);
+	}
+	
+	public static void addReputation(EntityPlayer player, int dimension, int rep)
+	{
+		addReputation(IdentifierHandler.encode(player), dimension, rep);
+	}
+	
+	public static void addReputation(IdentifierHandler.PlayerIdentifier id, int dimension, int rep)
+	{
+		SburbConnection c = SburbHandler.getConnectionForDimension(dimension);
+		if(c == null || c.clientHomeLand == null)
+		{
+			Debug.warnf("Could not find connection for dimension %d while setting consort reputation value.", dimension);
+			return;
+		}
+		c.clientHomeLand.addReputation(id, rep);
+		
+		EntityPlayer player = id.getPlayer();
+		if(player != null && dimension == player.dimension)
+		{
+			MinestuckChannelHandler.sendToPlayer(MinestuckPacket.makePacket(MinestuckPacket.Type.PLAYER_DATA, PlayerDataPacket.CONSORT_REPUTATION, c.clientHomeLand.getReputation(id)), player);
+			if(rep < 0)
+			{
+				ITextComponent message = new TextComponentTranslation("consort.repDown", new TextComponentTranslation(String.valueOf(Math.abs(rep))));
+				player.sendMessage(message);
+			} else
+			{
+				ITextComponent message = new TextComponentTranslation("consort.repUp", new TextComponentTranslation(String.valueOf(Math.abs(rep))));
+				player.sendMessage(message);
+			}
+		}
 	}
 }

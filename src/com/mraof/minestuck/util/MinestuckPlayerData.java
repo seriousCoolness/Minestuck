@@ -35,6 +35,7 @@ public class MinestuckPlayerData
 	public static float rungProgress;
 	@SideOnly(Side.CLIENT)
 	public static int boondollars;
+	@SideOnly(Side.CLIENT)
 	public static int consortRep;
 	@SideOnly(Side.CLIENT)
 	static GristSet playerGrist;
@@ -149,31 +150,6 @@ public class MinestuckPlayerData
 		return true;
 	}
 	
-	public static boolean addReputation(EntityPlayer player, int rep)
-	{
-		return addReputation(IdentifierHandler.encode(player), rep);
-	}
-	
-	public static boolean addReputation(PlayerIdentifier id, int rep)
-	{
-		PlayerData data = MinestuckPlayerData.getData(id);
-		if(data.consortRep + rep < -1000 || data.consortRep + rep > 1000)
-			return false;
-		data.consortRep += rep;
-		
-		EntityPlayer player = id.getPlayer();
-		if(player != null)
-			MinestuckChannelHandler.sendToPlayer(MinestuckPacket.makePacket(MinestuckPacket.Type.PLAYER_DATA, PlayerDataPacket.CONSORT_REPUTATION, data.consortRep), player);
-		if(rep < 0) {
-			ITextComponent message = new TextComponentTranslation("consort.repDown", new TextComponentTranslation(String.valueOf(Math.abs(rep))));
-			player.sendMessage(message);
-		} else { 
-			ITextComponent message = new TextComponentTranslation("consort.repUp", new TextComponentTranslation(String.valueOf(Math.abs(rep))));
-			player.sendMessage(message);
-		}
-		return true;
-	}
-	
 	public static class PlayerData
 	{
 
@@ -185,7 +161,6 @@ public class MinestuckPlayerData
 		public int color = -1;
 		public int boondollars;
 		public Echeladder echeladder;
-		public int consortRep;
 
 		private void readFromNBT(NBTTagCompound nbt)
 		{
@@ -245,8 +220,6 @@ public class MinestuckPlayerData
 				this.color = nbt.getInteger("color");
 			boondollars = nbt.getInteger("boondollars");
 			
-			consortRep = nbt.getInteger("consortReputation");
-			
 			echeladder = new Echeladder(player);
 			echeladder.loadEcheladder(nbt);
 		}
@@ -277,7 +250,6 @@ public class MinestuckPlayerData
 			else nbt.setBoolean("givenModus", givenModus);
 			nbt.setInteger("color", this.color);
 			nbt.setInteger("boondollars", boondollars);
-			nbt.setInteger("consortReputation", consortRep);
 
 			echeladder.saveEcheladder(nbt);
 			return nbt;

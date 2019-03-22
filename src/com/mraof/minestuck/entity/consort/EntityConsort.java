@@ -277,7 +277,7 @@ public abstract class EntityConsort extends EntityMinestuck
         EntityLivingBase entityLivingBase = this.getAttackingEntity();
         Debug.info(entityLivingBase);
         if(entityLivingBase != null && !(entityLivingBase.world.isRemote) && entityLivingBase instanceof EntityPlayer) {
-                MinestuckPlayerData.addReputation((EntityPlayer) entityLivingBase, -50);
+                MinestuckDimensionHandler.addReputation((EntityPlayer) entityLivingBase, this.homeDimension, -50);
         }
     }
 }

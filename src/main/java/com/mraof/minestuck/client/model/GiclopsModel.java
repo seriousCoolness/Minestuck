@@ -18,11 +18,11 @@ public class GiclopsModel<T extends GiclopsEntity> extends SegmentedModel<T>
 	private ModelRenderer leftArm;
 	private ModelRenderer rightArm;
 	private ModelRenderer tail;
-	float scaling = 2.0F;
+	float scaling = 1.8F;
 
 	public GiclopsModel()
 	{
-		float offsetY = -96 + 24 / scaling;
+		float offsetY = -96 + 28 / scaling;
 		this.textureWidth = 256;
 		this.textureHeight = 256;
 		//setTextureOffset("null.Spike", 0, 0);
@@ -67,6 +67,7 @@ public class GiclopsModel<T extends GiclopsEntity> extends SegmentedModel<T>
 
 	public void render(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha)
 	{
+		matrixStackIn.translate(0F, -0.5F, 0F);
 		super.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
 	}
 

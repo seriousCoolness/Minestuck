@@ -81,7 +81,7 @@ public final class MSEntityTypes
 		register(registry, EntityType.Builder.create(OgreEntity::new, UNDERLING).size(2.8F, 4.3F), "ogre");
 		register(registry, EntityType.Builder.create(BasiliskEntity::new, UNDERLING).size(3F, 2F), "basilisk");
 		register(registry, EntityType.Builder.create(LichEntity::new, UNDERLING).size(0.8F, 2.0F), "lich");
-		register(registry, EntityType.Builder.create(GiclopsEntity::new, UNDERLING).size(4.0F, 6.0F), "giclops");
+		register(registry, EntityType.Builder.create(GiclopsEntity::new, UNDERLING).size(3.8F, 6F), "giclops");
 		register(registry, EntityType.Builder.create(WyrmEntity::new, UNDERLING), "wyrm");
 		
 		register(registry, EntityType.Builder.create(PawnEntity::createDersite, EntityClassification.MONSTER).size(0.6F, 1.5F), "dersite_pawn");
@@ -91,7 +91,7 @@ public final class MSEntityTypes
 		register(registry, EntityType.Builder.create(RookEntity::createDersite, EntityClassification.MONSTER).size(3.5F, 3.5F), "dersite_rook");
 		register(registry, EntityType.Builder.create(RookEntity::createProspitian, EntityClassification.MONSTER).size(3.5F, 3.5F), "prospitian_rook");
 		
-		register(registry, EntityType.Builder.<GristEntity>create(GristEntity::new, EntityClassification.MISC).size(1 / 3F, 1 / 3F).setTrackingRange(4).setUpdateInterval(20).immuneToFire(), "grist");
+		register(registry, EntityType.Builder.<GristEntity>create(GristEntity::new, EntityClassification.MISC).size(3 / 8F, 3 / 8F).setTrackingRange(4).setUpdateInterval(20).immuneToFire(), "grist");
 		register(registry, EntityType.Builder.<VitalityGelEntity>create(VitalityGelEntity::new, EntityClassification.MISC).size(1 / 4F, 1 / 4F).setTrackingRange(4).setUpdateInterval(20).immuneToFire(), "vitality_gel");
 		register(registry, EntityType.Builder.<DecoyEntity>create(EntityClassification.MISC).setCustomClientFactory((spawnEntity, world) -> new DecoyEntity(world)).disableSerialization().disableSummoning(), "player_decoy");
 		

@@ -27,6 +27,7 @@ public class MSItemTypes
 	public static final IItemTier REGI_TIER = new ModItemTier(3, 812, 8.0F, 3.0F, 10, () -> Ingredient.EMPTY);
 	public static final IItemTier RUBY_TIER = new ModItemTier(3, 2000, 10.0F, 4.0F, 16, () -> Ingredient.EMPTY);
 	public static final IItemTier ZILLYHOO_TIER = new ModItemTier(4, 3000, 15.0F, 5.0F, 25, () -> Ingredient.EMPTY);
+	public static final IItemTier WELSH_TIER = new ModItemTier(4, 3000, 15.0F, 6.0F, 20, () -> Ingredient.fromItems(MSItems.CUEBALL));
 	public static final IItemTier SBAHJ_TIER = new ModItemTier(0, 59, 1.0F, -1.0F, 5, () -> Ingredient.EMPTY);
 	public static final IItemTier PAPER_TIER = new ModItemTier(0, 65, 1.0F, 0.0F, 15, () -> Ingredient.fromItems(Items.PAPER));
 	public static final IItemTier ICE_TIER = new ModItemTier(0, 60, 2.0F, 1.0F, 25, () -> Ingredient.fromItems(MSItems.ICE_SHARD));

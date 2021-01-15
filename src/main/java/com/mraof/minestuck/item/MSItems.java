@@ -622,21 +622,21 @@ public class MSItems
 		registerItemBlock(registry, GLOWYSTONE_DUST, MSItemGroup.MAIN);
 		
 		//hammers
-		registry.register(new WeaponItem(ItemTier.IRON, 2, -2.4F, 1.0F, MSItemTypes.HAMMER_TOOL, new Item.Properties().defaultMaxDamage(131).group(MSItemGroup.WEAPONS)).setRegistryName("claw_hammer"));
-		registry.register(new WeaponItem(ItemTier.IRON, 4, -2.8F, 4.0F, MSItemTypes.HAMMER_TOOL, new Item.Properties().group(MSItemGroup.WEAPONS)).setRegistryName("sledge_hammer"));
-		registry.register(new WeaponItem(ItemTier.IRON, 5, -2.8F, 3.5F, MSItemTypes.HAMMER_TOOL, new Item.Properties().defaultMaxDamage(450).group(MSItemGroup.WEAPONS)).setRegistryName("blacksmith_hammer"));
-		registry.register(new PogoWeaponItem(MSItemTypes.POGO_TIER, 5, -2.8F, 2.0F, 0.7, MSItemTypes.HAMMER_TOOL, new Item.Properties().group(MSItemGroup.WEAPONS)).setRegistryName("pogo_hammer"));
-		registry.register(new PogoWeaponItem(MSItemTypes.POGO_TIER, 7, -2.8F, 2.0F, 0.4, MSItemTypes.HAMMER_TOOL, new Item.Properties().group(MSItemGroup.WEAPONS)).setRegistryName("wrinklefucker"));
-		registry.register(new WeaponItem(MSItemTypes.BOOK_TIER, 8, -3.3F, 5.0F, MSItemTypes.HAMMER_TOOL, new Item.Properties().defaultMaxDamage(1024).group(MSItemGroup.WEAPONS)).setRegistryName("telescopic_sassacrusher"));
-		registry.register(new WeaponItem(MSItemTypes.REGI_TIER, 4, -2.4F, 8.0F, MSItemTypes.HAMMER_TOOL, new Item.Properties().group(MSItemGroup.WEAPONS)).setRegistryName("regi_hammer"));
-		registry.register(new PotionWeaponItem(MSItemTypes.RUBY_TIER, 6, -2.8F, 7.0F, new EffectInstance(Effects.SLOWNESS, 100, 3),  MSItemTypes.HAMMER_TOOL, new Item.Properties().group(MSItemGroup.WEAPONS)).setRegistryName("fear_no_anvil"));
-		registry.register(new FireWeaponItem(MSItemTypes.RUBY_TIER, 6, -2.8F, 12.0F, 25,  MSItemTypes.HAMMER_TOOL, new Item.Properties().defaultMaxDamage(1413).group(MSItemGroup.WEAPONS)).setRegistryName("melt_masher"));
-		registry.register(new PogoFarmineItem(MSItemTypes.RUBY_TIER, 5, -2.8F, 9.0F, Integer.MAX_VALUE, 200, 0.7, MSItemTypes.MULTI_TOOL,  new Item.Properties().defaultMaxDamage(6114).group(MSItemGroup.WEAPONS)).setRegistryName("estrogen_empowered_everything_eradicator"));
-		registry.register(new SbahjEEEEItem(MSItemTypes.RUBY_TIER, 5, -2.8F, 9.1F, 0.2,  MSItemTypes.HAMMER_TOOL, new Item.Properties().defaultMaxDamage(6114).group(MSItemGroup.WEAPONS)).setRegistryName("eeeeeeeeeeee"));
-		registry.register(new WeaponItem(MSItemTypes.ZILLYHOO_TIER, 6, -2.8F, 15.0F,  MSItemTypes.HAMMER_TOOL, new Item.Properties().group(MSItemGroup.WEAPONS).rarity(Rarity.RARE)).setRegistryName("zillyhoo_hammer"));
-		registry.register(new RandomWeaponItem(MSItemTypes.ZILLYHOO_TIER, 5, -2.8F, 15.0F,  MSItemTypes.HAMMER_TOOL, new Item.Properties().group(MSItemGroup.WEAPONS)).setRegistryName("popamatic_vrillyhoo"));
-		registry.register(new FireWeaponItem(MSItemTypes.ZILLYHOO_TIER, 5, -2.8F, 4.0F, 50,  MSItemTypes.HAMMER_TOOL, new Item.Properties().group(MSItemGroup.WEAPONS)).setRegistryName("scarlet_zillyhoo"));
-		registry.register(new WeaponItem(MSItemTypes.RUBY_TIER, 7, -2.8F, 4.0F,  MSItemTypes.HAMMER_TOOL, new Item.Properties().group(MSItemGroup.WEAPONS).rarity(Rarity.RARE)).setRegistryName("mwrthwl"));
+		registry.register(new WeaponItem(ItemTier.IRON, 2, -3.0F, 1.0F, MSItemTypes.HAMMER_TOOL, new Item.Properties().defaultMaxDamage(131).group(MSItemGroup.WEAPONS)).setRegistryName("claw_hammer"));
+		registry.register(new WeaponItem(ItemTier.IRON, 4, -3.2F, 4.0F, MSItemTypes.HAMMER_TOOL, new Item.Properties().group(MSItemGroup.WEAPONS)).setRegistryName("sledge_hammer"));
+		registry.register(new WeaponItem(ItemTier.IRON, 5, -3.2F, 3.5F, MSItemTypes.HAMMER_TOOL, new Item.Properties().defaultMaxDamage(450).group(MSItemGroup.WEAPONS)).setRegistryName("blacksmith_hammer"));
+		registry.register(new PogoWeaponItem(MSItemTypes.POGO_TIER, 5, -3.2F, 2.0F, 0.7, MSItemTypes.HAMMER_TOOL, new Item.Properties().group(MSItemGroup.WEAPONS)).setRegistryName("pogo_hammer"));
+		registry.register(new PogoWeaponItem(MSItemTypes.POGO_TIER, 7, -3.2F, 2.0F, 0.4, MSItemTypes.HAMMER_TOOL, new Item.Properties().group(MSItemGroup.WEAPONS)).setRegistryName("wrinklefucker"));
+		registry.register(new WeaponItem(MSItemTypes.BOOK_TIER, 9, -3.8F, 5.0F, MSItemTypes.HAMMER_TOOL, new Item.Properties().defaultMaxDamage(1024).group(MSItemGroup.WEAPONS)).setRegistryName("telescopic_sassacrusher"));
+		registry.register(new WeaponItem(MSItemTypes.REGI_TIER, 8, -3.2F, 8.0F, MSItemTypes.HAMMER_TOOL, new Item.Properties().group(MSItemGroup.WEAPONS).rarity(Rarity.COMMON)).setRegistryName("regi_hammer"));
+		registry.register(new PotionWeaponItem(MSItemTypes.RUBY_TIER, 7, -3.2F, 7.0F, new EffectInstance(Effects.SLOWNESS, 100, 3),  MSItemTypes.HAMMER_TOOL, new Item.Properties().group(MSItemGroup.WEAPONS).rarity(Rarity.UNCOMMON)).setRegistryName("fear_no_anvil"));
+		registry.register(new FireWeaponItem(MSItemTypes.RUBY_TIER, 7, -3.2F, 12.0F, 25,  MSItemTypes.HAMMER_TOOL, new Item.Properties().defaultMaxDamage(1413).group(MSItemGroup.WEAPONS)).setRegistryName("melt_masher"));
+		registry.register(new PogoFarmineItem(MSItemTypes.RUBY_TIER, 5, -3.2F, 9.0F, Integer.MAX_VALUE, 200, 0.7, MSItemTypes.MULTI_TOOL,  new Item.Properties().defaultMaxDamage(6114).group(MSItemGroup.WEAPONS)).setRegistryName("estrogen_empowered_everything_eradicator"));
+		registry.register(new SbahjEEEEItem(MSItemTypes.RUBY_TIER, 5, -3.2F, 9.1F, 0.2,  MSItemTypes.HAMMER_TOOL, new Item.Properties().defaultMaxDamage(6114).group(MSItemGroup.WEAPONS)).setRegistryName("eeeeeeeeeeee"));
+		registry.register(new WeaponItem(MSItemTypes.ZILLYHOO_TIER, 8, -3.2F, 15.0F,  MSItemTypes.HAMMER_TOOL, new Item.Properties().group(MSItemGroup.WEAPONS).rarity(Rarity.RARE)).setRegistryName("zillyhoo_hammer"));
+		registry.register(new RandomWeaponItem(MSItemTypes.ZILLYHOO_TIER, 6, -3.2F, 15.0F,  MSItemTypes.HAMMER_TOOL, new Item.Properties().group(MSItemGroup.WEAPONS).rarity(Rarity.UNCOMMON)).setRegistryName("popamatic_vrillyhoo"));
+		registry.register(new FireWeaponItem(MSItemTypes.ZILLYHOO_TIER, 7, -3.2F, 4.0F, 50,  MSItemTypes.HAMMER_TOOL, new Item.Properties().group(MSItemGroup.WEAPONS).rarity(Rarity.UNCOMMON)).setRegistryName("scarlet_zillyhoo"));
+		registry.register(new WeaponItem(MSItemTypes.WELSH_TIER, 8, -3.4F, 4.0F,  MSItemTypes.HAMMER_TOOL, new Item.Properties().group(MSItemGroup.WEAPONS).rarity(Rarity.RARE).rarity(Rarity.RARE)).setRegistryName("mwrthwl"));
 		
 		//blades
 		registry.register(new SordItem(MSItemTypes.SBAHJ_TIER, 3, -2.4F, 1.0F,  MSItemTypes.SWORD_TOOL, new Item.Properties().group(MSItemGroup.WEAPONS)).setRegistryName("sord"));

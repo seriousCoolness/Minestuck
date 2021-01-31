@@ -28,6 +28,7 @@ public class ModusTypes
 	public static final ModusType<TreeModus> TREE = getNull();
 	public static final ModusType<HashMapModus> HASH_MAP = getNull();
 	public static final ModusType<SetModus> SET = getNull();
+	public static final ModusType<ArrayModus> ARRAY = getNull();
 	
 	@Nonnull
 	@SuppressWarnings("ConstantConditions")
@@ -62,6 +63,7 @@ public class ModusTypes
 		event.getRegistry().register(new ModusType<>(TreeModus::new, MSItems.TREE_MODUS_CARD).setRegistryName("tree"));
 		event.getRegistry().register(new ModusType<>(HashMapModus::new, MSItems.HASHMAP_MODUS_CARD).setRegistryName("hash_map"));
 		event.getRegistry().register(new ModusType<>(SetModus::new, MSItems.SET_MODUS_CARD).setRegistryName("set"));
+		event.getRegistry().register(new ModusType<>(ArrayModus::new, MSItems.ARRAY_MODUS_CARD).setRegistryName("array"));
 	}
 	
 	private static class ModusCallbacks implements IForgeRegistry.AddCallback<ModusType<?>>, IForgeRegistry.ClearCallback<ModusType<?>>, IForgeRegistry.CreateCallback<ModusType<?>>

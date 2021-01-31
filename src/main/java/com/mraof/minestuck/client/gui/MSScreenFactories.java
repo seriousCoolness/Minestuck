@@ -45,6 +45,7 @@ public class MSScreenFactories
 		registerSylladexFactory(ModusTypes.TREE, TreeSylladexScreen::new);
 		registerSylladexFactory(ModusTypes.HASH_MAP, HashMapSylladexScreen::new);
 		registerSylladexFactory(ModusTypes.SET, SetSylladexScreen::new);
+		registerSylladexFactory(ModusTypes.ARRAY, ArraySylladexScreen::new);
 	}
 	
 	public static void registerSylladexFactory(ModusType<?> type, Function<Modus, ? extends SylladexScreen> factory)

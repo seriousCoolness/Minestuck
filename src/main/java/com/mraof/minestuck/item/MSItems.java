@@ -241,6 +241,7 @@ public class MSItems
 	public static final Item TREE_MODUS_CARD = getNull();
 	public static final Item HASHMAP_MODUS_CARD = getNull();
 	public static final Item SET_MODUS_CARD = getNull();
+	public static final Item ARRAY_MODUS_CARD = getNull();
 	public static final Item SHUNT = getNull();
 	
 	//Food
@@ -836,6 +837,7 @@ public class MSItems
 		registry.register(new Item(new Item.Properties().maxStackSize(1).group(MSItemGroup.MAIN)).setRegistryName("tree_modus_card"));
 		registry.register(new Item(new Item.Properties().maxStackSize(1).group(MSItemGroup.MAIN)).setRegistryName("hashmap_modus_card"));
 		registry.register(new Item(new Item.Properties().maxStackSize(1).group(MSItemGroup.MAIN)).setRegistryName("set_modus_card"));
+		registry.register(new Item(new Item.Properties().maxStackSize(1).group(MSItemGroup.MAIN)).setRegistryName("array_modus_card"));
 		registry.register(new ShuntItem(new Item.Properties().maxStackSize(1)).setRegistryName("shunt"));
 		
 		//food
